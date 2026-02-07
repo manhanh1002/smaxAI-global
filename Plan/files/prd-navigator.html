@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 PRD Navigator - AI-Assisted Revenue Engine</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0066CC;
+            --primary-light: #E3F2FD;
+            --primary-dark: #0052A3;
+            --success: #28A745;
+            --warning: #FFC107;
+            --danger: #DC3545;
+            --gray-50: #F8F9FA;
+            --gray-100: #E9ECEF;
+            --gray-200: #DEE2E6;
+            --gray-700: #495057;
+            --gray-900: #212529;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --box-shadow-hover: 0 4px 16px rgba(0, 102, 204, 0.15);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--gray-900);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            border-bottom: 2px solid var(--gray-100);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--box-shadow);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            font-size: 28px;
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow-hover);
+        }
+
+        .btn-secondary {
+            background: var(--gray-100);
+            color: var(--gray-900);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-200);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: var(--gray-700);
+            margin-bottom: 20px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            background: var(--primary-light);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-card .label {
+            font-size: 12px;
+            color: var(--gray-700);
+            margin-top: 5px;
+            text-transform: uppercase;
+        }
+
+        /* Navigation Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            background: white;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--gray-200);
+            background: white;
+            color: var(--gray-700);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Document Grid */
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .doc-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 24px;
+            box-shadow: var(--box-shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-left: 4px solid var(--primary);
+        }
+
+        .doc-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--box-shadow-hover);
+        }
+
+        .doc-card.hidden {
+            display: none;
+        }
+
+        .doc-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .doc-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .doc-desc {
+            font-size: 14px;
+            color: var(--gray-700);
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .doc-meta {
+            display: flex;
+            gap: 12px;
+            font-size: 12px;
+            color: var(--gray-700);
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: var(--gray-100);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .tag.core {
+            background: #FFE3E3;
+            color: var(--danger);
+        }
+
+        .tag.ai {
+            background: #E3F2FF;
+            color: var(--primary);
+        }
+
+        .tag.tech {
+            background: #E8F5E9;
+            color: var(--success);
+        }
+
+        .doc-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .doc-buttons a,
+        .doc-buttons button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-view {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-view:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-download {
+            background: var(--gray-100);
+            color: var(--gray-900);
+        }
+
+        .btn-download:hover {
+            background: var(--gray-200);
+        }
+
+        /* Role Guides */
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .role-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 24px;
+            box-shadow: var(--box-shadow);
+            border-top: 4px solid var(--primary);
+        }
+
+        .role-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .role-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--gray-900);
+        }
+
+        .role-time {
+            font-size: 14px;
+            color: var(--success);
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .role-docs {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .role-docs h4 {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--gray-700);
+            margin-bottom: 8px;
+        }
+
+        .role-docs ol {
+            margin-left: 20px;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .role-docs li {
+            margin-bottom: 6px;
+        }
+
+        /* Quick Links */
+        .quick-links {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 24px;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+        }
+
+        .quick-links h3 {
+            font-size: 18px;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .link-item {
+            padding: 12px;
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            border-left: 3px solid var(--primary);
+            text-decoration: none;
+            color: var(--gray-900);
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        .link-item:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .link-item .label {
+            font-size: 12px;
+            color: var(--gray-700);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .link-item .title {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 70px;
+            width: 250px;
+            height: calc(100vh - 70px);
+            background: white;
+            border-right: 1px solid var(--gray-200);
+            overflow-y: auto;
+            padding: 20px;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 50;
+        }
+
+        .sidebar.open {
+            transform: translateX(0);
+        }
+
+        .sidebar h3 {
+            font-size: 14px;
+            text-transform: uppercase;
+            color: var(--gray-700);
+            margin: 20px 0 12px 0;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 10px 12px;
+            color: var(--gray-700);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            transition: all 0.3s ease;
+            margin-bottom: 6px;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .toggle-sidebar {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            background: white;
+            border-top: 1px solid var(--gray-200);
+            padding: 30px;
+            text-align: center;
+            color: var(--gray-700);
+            font-size: 14px;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .search-box {
+                max-width: 100%;
+            }
+
+            .documents-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .roles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .toggle-sidebar {
+                display: block;
+            }
+
+            .sidebar {
+                box-shadow: var(--box-shadow-hover);
+            }
+
+            .hero {
+                padding: 24px;
+            }
+
+            .hero h1 {
+                font-size: 24px;
+            }
+
+            .tab-btn {
+                flex: 1;
+                min-width: 100px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            header, footer, .tabs, .search-box {
+                display: none;
+            }
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--gray-700);
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid var(--gray-200);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Alert */
+        .alert {
+            padding: 12px 16px;
+            background: var(--primary-light);
+            border-radius: var(--border-radius);
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">📚</span>
+                <span>PRD Navigator</span>
+            </div>
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Tìm kiếm tài liệu (Ctrl+K)..."
+                    autocomplete="off"
+                >
+            </div>
+            <div class="header-nav">
+                <button class="toggle-sidebar" id="toggleSidebar">☰</button>
+                <button class="btn btn-secondary" onclick="toggleTheme()">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <h3>🎯 Vai trò</h3>
+        <a href="#" data-role="pm">📊 Product Manager</a>
+        <a href="#" data-role="engineer">💻 Engineer</a>
+        <a href="#" data-role="designer">🎨 Designer</a>
+        <a href="#" data-role="ai">🤖 AI/ML Engineer</a>
+        <a href="#" data-role="devops">🔧 DevOps</a>
+
+        <h3>📖 Tài liệu</h3>
+        <a href="#all">👁️ Tất cả</a>
+        <a href="#overview">🎯 Overview</a>
+        <a href="#core">⭐ Core (Moat)</a>
+        <a href="#ai">🤖 AI & Logic</a>
+        <a href="#tech">💻 Tech Stack</a>
+
+        <h3>🔍 Thứ tự đọc</h3>
+        <a href="#reading-pm">PM Path</a>
+        <a href="#reading-engineer">Engineer Path</a>
+        <a href="#reading-designer">Designer Path</a>
+    </aside>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>🚀 AI-Assisted Revenue Engine PRD</h1>
+            <p>Nền tảng SaaS hỗ trợ AI quản lý lead, booking & tăng show-up cho doanh nghiệp booking</p>
+            <div class="stats">
+                <div class="stat-card">
+                    <span class="number">11</span>
+                    <span class="label">Tài liệu</span>
+                </div>
+                <div class="stat-card">
+                    <span class="number">5,500+</span>
+                    <span class="label">Dòng nội dung</span>
+                </div>
+                <div class="stat-card">
+                    <span class="number">170KB</span>
+                    <span class="label">Tổng dung lượng</span>
+                </div>
+                <div class="stat-card">
+                    <span class="number">3mo</span>
+                    <span class="label">MVP Timeline</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs Navigation -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="all">👁️ Tất cả tài liệu</button>
+            <button class="tab-btn" data-tab="quick-start">⚡ Quick Start</button>
+            <button class="tab-btn" data-tab="roles">👥 Theo vai trò</button>
+            <button class="tab-btn" data-tab="core">⭐ Core Features</button>
+            <button class="tab-btn" data-tab="tech">💻 Tech Details</button>
+        </div>
+
+        <!-- Tab: All Documents -->
+        <div id="all" class="content-section active">
+            <div class="alert">
+                💡 <strong>Gợi ý:</strong> Dùng Ctrl+K để tìm kiếm nhanh hoặc chọn vai trò bạn ở sidebar
+            </div>
+            <div class="documents-grid" id="allDocuments"></div>
+        </div>
+
+        <!-- Tab: Quick Start -->
+        <div id="quick-start" class="content-section">
+            <div class="quick-links">
+                <h3>🚀 Bắt đầu nhanh theo vai trò</h3>
+                <div class="links-grid">
+                    <a href="#" class="link-item" data-role="pm">
+                        <div class="label">📊 Product Manager</div>
+                        <div class="title">30 phút → Hiểu vision & market</div>
+                    </a>
+                    <a href="#" class="link-item" data-role="designer">
+                        <div class="label">🎨 Designer</div>
+                        <div class="title">35 phút → Thiết kế user flows</div>
+                    </a>
+                    <a href="#" class="link-item" data-role="engineer">
+                        <div class="label">💻 Backend Engineer</div>
+                        <div class="title">50 phút → Architecture & coding</div>
+                    </a>
+                    <a href="#" class="link-item" data-role="ai">
+                        <div class="label">🤖 AI/ML Engineer</div>
+                        <div class="title">45 phút → AI strategy & LLM</div>
+                    </a>
+                    <a href="#" class="link-item" data-role="devops">
+                        <div class="label">🔧 DevOps</div>
+                        <div class="title">20 phút → Infrastructure setup</div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="quick-links" style="margin-top: 20px;">
+                <h3>📖 Tài liệu cần đọc đầu tiên</h3>
+                <div class="links-grid">
+                    <a href="#" class="link-item" onclick="filterByDoc('00_START_HERE.md')">
+                        <div class="label">🎯 START HERE</div>
+                        <div class="title">Điểm khởi đầu + hướng dẫn</div>
+                    </a>
+                    <a href="#" class="link-item" onclick="filterByDoc('01_PRODUCT_OVERVIEW.md')">
+                        <div class="label">🎯 OVERVIEW</div>
+                        <div class="title">Tổng quan sản phẩm & mục tiêu</div>
+                    </a>
+                    <a href="#" class="link-item" onclick="filterByDoc('06_BOOKING_ORCHESTRATION_ENGINE.md')">
+                        <div class="label">⭐ CORE MOAT</div>
+                        <div class="title">State machine booking</div>
+                    </a>
+                    <a href="#" class="link-item" onclick="filterByDoc('05_AI_LOGIC_ARCHITECTURE.md')">
+                        <div class="label">🤖 AI LOGIC</div>
+                        <div class="title">Chiến lược AI & LLM</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Roles -->
+        <div id="roles" class="content-section">
+            <div class="roles-grid">
+                <div class="role-card">
+                    <div class="role-icon">📊</div>
+                    <div class="role-name">Product Manager</div>
+                    <div class="role-time">⏱️ 30 phút</div>
+                    <div class="role-docs">
+                        <h4>Đọc theo thứ tự:</h4>
+                        <ol>
+                            <li><a href="#" onclick="filterByDoc('00_START_HERE.md'); return false;">00_START_HERE</a></li>
+                            <li><a href="#" onclick="filterByDoc('01_PRODUCT_OVERVIEW.md'); return false;">01_PRODUCT_OVERVIEW</a></li>
+                            <li><a href="#" onclick="filterByDoc('02_MARKET_PROBLEMS.md'); return false;">02_MARKET_PROBLEMS</a></li>
+                            <li><a href="#" onclick="filterByDoc('03_PRODUCT_SCOPE.md'); return false;">03_PRODUCT_SCOPE</a></li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <div class="role-icon">💻</div>
+                    <div class="role-name">Backend Engineer</div>
+                    <div class="role-time">⏱️ 50 phút</div>
+                    <div class="role-docs">
+                        <h4>Đọc theo thứ tự:</h4>
+                        <ol>
+                            <li><a href="#" onclick="filterByDoc('03_PRODUCT_SCOPE.md'); return false;">03_PRODUCT_SCOPE</a></li>
+                            <li><a href="#" onclick="filterByDoc('08_TECH_STACK_AI.md'); return false;">08_TECH_STACK_AI</a></li>
+                            <li><a href="#" onclick="filterByDoc('06_BOOKING_ORCHESTRATION_ENGINE.md'); return false;">06_BOOKING_ENGINE</a></li>
+                            <li><a href="#" onclick="filterByDoc('05_AI_LOGIC_ARCHITECTURE.md'); return false;">05_AI_LOGIC</a></li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <div class="role-icon">🎨</div>
+                    <div class="role-name">Designer (UX/UI)</div>
+                    <div class="role-time">⏱️ 35 phút</div>
+                    <div class="role-docs">
+                        <h4>Đọc theo thứ tự:</h4>
+                        <ol>
+                            <li><a href="#" onclick="filterByDoc('07_UX_UI_FLOWS.md'); return false;">07_UX_UI_FLOWS</a></li>
+                            <li><a href="#" onclick="filterByDoc('04_FEATURE_DETAILS.md'); return false;">04_FEATURE_DETAILS</a></li>
+                            <li><a href="#" onclick="filterByDoc('06_BOOKING_ORCHESTRATION_ENGINE.md'); return false;">06_BOOKING_ENGINE</a></li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <div class="role-icon">🤖</div>
+                    <div class="role-name">AI/ML Engineer</div>
+                    <div class="role-time">⏱️ 45 phút</div>
+                    <div class="role-docs">
+                        <h4>Đọc theo thứ tự:</h4>
+                        <ol>
+                            <li><a href="#" onclick="filterByDoc('05_AI_LOGIC_ARCHITECTURE.md'); return false;">05_AI_LOGIC</a></li>
+                            <li><a href="#" onclick="filterByDoc('08_TECH_STACK_AI.md'); return false;">08_TECH_STACK_AI</a></li>
+                            <li><a href="#" onclick="filterByDoc('04_FEATURE_DETAILS.md'); return false;">04_FEATURE_DETAILS</a></li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <div class="role-icon">🔧</div>
+                    <div class="role-name">DevOps / Infrastructure</div>
+                    <div class="role-time">⏱️ 20 phút</div>
+                    <div class="role-docs">
+                        <h4>Đọc theo thứ tự:</h4>
+                        <ol>
+                            <li><a href="#" onclick="filterByDoc('08_TECH_STACK_AI.md'); return false;">08_TECH_STACK_AI</a></li>
+                            <li><a href="#" onclick="filterByDoc('03_PRODUCT_SCOPE.md'); return false;">03_PRODUCT_SCOPE</a></li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <div class="role-icon">👥</div>
+                    <div class="role-name">Full Team / All-hands</div>
+                    <div class="role-time">⏱️ 2-3 giờ</div>
+                    <div class="role-docs">
+                        <h4>Đọc tất cả documents:</h4>
+                        <ol>
+                            <li>Bắt đầu với 00_START_HERE</li>
+                            <li>Theo vai trò cụ thể</li>
+                            <li>Deep dive các topics</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Core Features -->
+        <div id="core" class="content-section">
+            <div class="documents-grid" id="coreDocuments"></div>
+        </div>
+
+        <!-- Tab: Tech Details -->
+        <div id="tech" class="content-section">
+            <div class="documents-grid" id="techDocuments"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p><strong>PRD Navigator v1.0</strong> - AI-Assisted Revenue Engine for Booking Businesses</p>
+            <p style="margin-top: 10px; font-size: 12px; color: #999;">
+                📚 11 documents | 5,500+ lines | 170KB | Last updated: Feb 2026
+            </p>
+            <p style="margin-top: 10px;">
+                <a href="#" style="color: var(--primary); text-decoration: none;">📖 Full Documentation</a> • 
+                <a href="#" style="color: var(--primary); text-decoration: none;">🐛 Report Issue</a> • 
+                <a href="#" style="color: var(--primary); text-decoration: none;">💬 Feedback</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Document Data
+        const documents = [
+            {
+                id: "00",
+                file: "00_START_HERE.md",
+                icon: "🚀",
+                title: "START HERE",
+                desc: "Điểm khởi đầu, hướng dẫn theo vai trò, tóm tắt 30 giây",
+                tags: ["essential", "getting-started"],
+                time: "10 min",
+                category: "overview"
+            },
+            {
+                id: "01",
+                file: "01_PRODUCT_OVERVIEW.md",
+                icon: "🎯",
+                title: "Product Overview",
+                desc: "Tổng quan sản phẩm, mục tiêu, định vị thị trường, ICP, value proposition",
+                tags: ["overview", "strategy"],
+                time: "15 min",
+                category: "overview"
+            },
+            {
+                id: "02",
+                file: "02_MARKET_PROBLEMS.md",
+                icon: "💔",
+                title: "Market Problems",
+                desc: "Pain points chính, phân tích cạnh tranh, market opportunity, validation",
+                tags: ["overview", "market"],
+                time: "12 min",
+                category: "overview"
+            },
+            {
+                id: "03",
+                file: "03_PRODUCT_SCOPE.md",
+                icon: "📦",
+                title: "Product Scope",
+                desc: "Phạm vi MVP, in-scope/out-scope, features list, templates, timeline",
+                tags: ["overview", "scope"],
+                time: "15 min",
+                category: "overview"
+            },
+            {
+                id: "04",
+                file: "04_FEATURE_DETAILS.md",
+                icon: "⚙️",
+                title: "Feature Details",
+                desc: "Chi tiết 6 modules, data models, workflows, UI components",
+                tags: ["features", "details"],
+                time: "20 min",
+                category: "overview"
+            },
+            {
+                id: "05",
+                file: "05_AI_LOGIC_ARCHITECTURE.md",
+                icon: "🤖",
+                title: "AI Logic Architecture",
+                desc: "AI strategy, LLM selection, prompt engineering, context management, cost optimization",
+                tags: ["ai", "core", "technical"],
+                time: "25 min",
+                category: "ai"
+            },
+            {
+                id: "06",
+                file: "06_BOOKING_ORCHESTRATION_ENGINE.md",
+                icon: "📅",
+                title: "Booking Orchestration Engine",
+                desc: "State machine booking, transition rules, slot management, validation, core moat",
+                tags: ["core", "moat", "technical"],
+                time: "25 min",
+                category: "core"
+            },
+            {
+                id: "07",
+                file: "07_UX_UI_FLOWS.md",
+                icon: "🎨",
+                title: "UX/UI Flows",
+                desc: "User flows, wireframes, screen design, mobile experience, design system, accessibility",
+                tags: ["design", "ux"],
+                time: "20 min",
+                category: "overview"
+            },
+            {
+                id: "08",
+                file: "08_TECH_STACK_AI.md",
+                icon: "💻",
+                title: "Tech Stack & AI",
+                desc: "Architecture, FastAPI, PostgreSQL, LLM integration, DevOps, infrastructure, tools",
+                tags: ["tech", "architecture", "devops"],
+                time: "30 min",
+                category: "tech"
+            },
+            {
+                id: "idx",
+                file: "INDEX.md",
+                icon: "🔍",
+                title: "INDEX",
+                desc: "Danh sách tài liệu, quick navigation, FAQ, learning paths",
+                tags: ["navigation", "reference"],
+                time: "5 min",
+                category: "overview"
+            },
+            {
+                id: "readme",
+                file: "README.md",
+                icon: "📖",
+                title: "README",
+                desc: "Hướng dẫn sử dụng bộ PRD, mối quan hệ giữa documents",
+                tags: ["navigation", "guide"],
+                time: "10 min",
+                category: "overview"
+            }
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderAllDocuments();
+            setupEventListeners();
+            setupSearchShortcut();
+        });
+
+        // Render all documents
+        function renderAllDocuments() {
+            const container = document.getElementById('allDocuments');
+            container.innerHTML = documents.map(doc => createDocCard(doc)).join('');
+        }
+
+        // Render core documents
+        function renderCoreDocuments() {
+            const container = document.getElementById('coreDocuments');
+            const coreDocs = documents.filter(doc => doc.tags.includes('core') || doc.tags.includes('moat'));
+            container.innerHTML = coreDocs.length ? coreDocs.map(doc => createDocCard(doc)).join('') : 
+                '<p style="grid-column: 1/-1; text-align: center; color: var(--gray-700);">Core features coming soon</p>';
+        }
+
+        // Render tech documents
+        function renderTechDocuments() {
+            const container = document.getElementById('techDocuments');
+            const techDocs = documents.filter(doc => doc.tags.includes('tech') || doc.category === 'tech');
+            container.innerHTML = techDocs.map(doc => createDocCard(doc)).join('');
+        }
+
+        // Create document card
+        function createDocCard(doc) {
+            const tagsHtml = doc.tags.map(tag => {
+                let tagClass = '';
+                if (tag === 'core' || tag === 'moat') tagClass = 'core';
+                else if (tag === 'ai') tagClass = 'ai';
+                else if (tag === 'tech' || tag === 'technical' || tag === 'architecture') tagClass = 'tech';
+                return `<span class="tag ${tagClass}">${tag}</span>`;
+            }).join('');
+
+            return `
+                <div class="doc-card" data-doc="${doc.file}" data-tags="${doc.tags.join(' ')}">
+                    <div class="doc-icon">${doc.icon}</div>
+                    <div class="doc-title">${doc.title}</div>
+                    <div class="doc-desc">${doc.desc}</div>
+                    <div class="doc-meta">
+                        ${tagsHtml}
+                        <span style="margin-left: auto;">⏱️ ${doc.time}</span>
+                    </div>
+                    <div class="doc-buttons">
+                        <a href="#" class="btn-view" onclick="viewDocument('${doc.file}'); return false;">📖 Đọc</a>
+                        <button class="btn-download" onclick="downloadDocument('${doc.file}')">📥 Tải</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    switchTab(tabName);
+                });
+            });
+
+            // Search
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', function(e) {
+                filterDocuments(e.target.value);
+            });
+
+            // Sidebar toggle
+            document.getElementById('toggleSidebar').addEventListener('click', function() {
+                document.getElementById('sidebar').classList.toggle('open');
+            });
+
+            // Close sidebar on link click
+            document.querySelectorAll('.sidebar a').forEach(link => {
+                link.addEventListener('click', function() {
+                    document.getElementById('sidebar').classList.remove('open');
+                });
+            });
+
+            // Role buttons
+            document.querySelectorAll('[data-role]').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const role = this.getAttribute('data-role');
+                    highlightRole(role);
+                });
+            });
+        }
+
+        // Switch tabs
+        function switchTab(tabName) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active class from buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected section
+            const section = document.getElementById(tabName);
+            if (section) {
+                section.classList.add('active');
+            }
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+
+            // Render specific tab content
+            if (tabName === 'core') {
+                renderCoreDocuments();
+            } else if (tabName === 'tech') {
+                renderTechDocuments();
+            }
+        }
+
+        // Filter documents
+        function filterDocuments(query) {
+            const cards = document.querySelectorAll('.doc-card');
+            const lowerQuery = query.toLowerCase();
+
+            cards.forEach(card => {
+                const title = card.querySelector('.doc-title').textContent.toLowerCase();
+                const desc = card.querySelector('.doc-desc').textContent.toLowerCase();
+                const tags = card.getAttribute('data-tags').toLowerCase();
+
+                if (title.includes(lowerQuery) || desc.includes(lowerQuery) || tags.includes(lowerQuery)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        // Filter by document
+        function filterByDoc(docName) {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.value = docName.replace('.md', '').replace(/_/g, ' ');
+            filterDocuments(searchInput.value);
+        }
+
+        // Setup search shortcut
+        function setupSearchShortcut() {
+            document.addEventListener('keydown', function(e) {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    document.getElementById('searchInput').focus();
+                }
+            });
+        }
+
+        // View document
+        function viewDocument(filename) {
+            alert(`📖 Tài liệu: ${filename}\n\nChức năng xem tài liệu sẽ được thêm vào.\nHiện tại, vui lòng mở file từ thư mục documents.`);
+        }
+
+        // Download document
+        function downloadDocument(filename) {
+            alert(`📥 Tải: ${filename}\n\nChức năng tải xuống sẽ được thêm vào.\nHiện tại, vui lòng tải file từ thư mục documents hoặc GitHub.`);
+        }
+
+        // Highlight role
+        function highlightRole(role) {
+            alert(`👤 Bạn chọn: ${role}\n\nHãy đọc theo lộ trình được gợi ý trong tab "Theo vai trò"`);
+        }
+
+        // Toggle theme
+        function toggleTheme() {
+            document.body.style.filter = document.body.style.filter === 'invert(1)' ? '' : 'invert(1)';
+        }
+    </script>
+</body>
+</html>

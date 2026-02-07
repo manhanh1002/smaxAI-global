@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Colors */
+  --color-primary-900: #0f1835;
+  --color-primary-800: #1a2444;
+  --color-accent-600: #e25a4a;
+  --color-accent-500: #fa6e5b;
+  
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-4: 16px;
+  --space-6: 24px;
+  
+  /* Typography */
+  --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-size-body-m: 14px;
+  --line-height-body-m: 21px;
+  
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(15, 24, 53, 0.05);
+  --shadow-md: 0 4px 6px rgba(15, 24, 53, 0.07);
+  
+  /* Transitions */
+  --transition-base: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  
+  font-family: var(--font-family-base);
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  color: var(--color-primary-900);
+  background-color: #f4f6fa; /* Gray 100 */
+}

@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 PRD Navigator - AI-Assisted Revenue Engine</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0066CC;
+            --primary-light: #E3F2FD;
+            --primary-dark: #0052A3;
+            --success: #28A745;
+            --warning: #FFC107;
+            --danger: #DC3545;
+            --gray-50: #F8F9FA;
+            --gray-100: #E9ECEF;
+            --gray-200: #DEE2E6;
+            --gray-700: #495057;
+            --gray-900: #212529;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f7fa;
+            color: var(--gray-900);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            border-bottom: 2px solid var(--gray-100);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--box-shadow);
+        }
+
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            white-space: nowrap;
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .breadcrumb {
+            font-size: 12px;
+            color: var(--gray-700);
+            white-space: nowrap;
+        }
+
+        /* Layout */
+        .layout {
+            display: flex;
+            max-width: 1600px;
+            margin: 0 auto;
+            height: calc(100vh - 60px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: white;
+            border-right: 1px solid var(--gray-100);
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .sidebar h3 {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--gray-700);
+            margin: 20px 0 12px 0;
+            font-weight: 600;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 10px 12px;
+            color: var(--gray-700);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-size: 13px;
+            transition: all 0.3s ease;
+            margin-bottom: 6px;
+            cursor: pointer;
+        }
+
+        .sidebar a:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .sidebar a.active {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .sidebar-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .document-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .document-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .doc-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 16px;
+            box-shadow: var(--box-shadow);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary);
+        }
+
+        .doc-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15);
+        }
+
+        .doc-icon {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .doc-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .doc-desc {
+            font-size: 13px;
+            color: var(--gray-700);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        /* Viewer */
+        .viewer {
+            flex: 1;
+            overflow-y: auto;
+            padding: 30px;
+            background: white;
+            display: none;
+        }
+
+        .viewer.active {
+            display: block;
+        }
+
+        .viewer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--gray-100);
+        }
+
+        .viewer-title {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .viewer-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--gray-700);
+        }
+
+        .viewer-content {
+            max-width: 900px;
+        }
+
+        /* Markdown Styling */
+        .viewer-content h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 30px 0 15px 0;
+        }
+
+        .viewer-content h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 25px 0 12px 0;
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 8px;
+        }
+
+        .viewer-content h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 20px 0 10px 0;
+        }
+
+        .viewer-content p {
+            margin: 12px 0;
+            line-height: 1.8;
+        }
+
+        .viewer-content ul, .viewer-content ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        .viewer-content li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .viewer-content code {
+            background: var(--gray-50);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: var(--danger);
+        }
+
+        .viewer-content pre {
+            background: var(--gray-50);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 4px solid var(--primary);
+        }
+
+        .viewer-content pre code {
+            background: none;
+            padding: 0;
+            color: var(--gray-900);
+        }
+
+        .viewer-content blockquote {
+            border-left: 4px solid var(--primary);
+            padding-left: 15px;
+            margin: 15px 0;
+            color: var(--gray-700);
+            font-style: italic;
+        }
+
+        .viewer-content table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+        }
+
+        .viewer-content table th,
+        .viewer-content table td {
+            border: 1px solid var(--gray-200);
+            padding: 10px;
+            text-align: left;
+        }
+
+        .viewer-content table th {
+            background: var(--primary-light);
+            font-weight: 600;
+        }
+
+        .viewer-content a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .viewer-content a:hover {
+            text-decoration: underline;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--gray-700);
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid var(--gray-200);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .layout {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .sidebar {
+                display: none;
+                width: 100%;
+                max-height: 50vh;
+                border-right: none;
+                border-bottom: 1px solid var(--gray-100);
+                position: absolute;
+                z-index: 50;
+                top: 60px;
+                left: 0;
+                right: 0;
+            }
+
+            .sidebar.open {
+                display: block;
+            }
+
+            .sidebar-toggle {
+                display: block;
+            }
+
+            .document-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .viewer {
+                padding: 15px;
+            }
+
+            .viewer-content {
+                max-width: 100%;
+            }
+
+            .header-content {
+                flex-wrap: wrap;
+            }
+
+            .search-box {
+                max-width: 100%;
+            }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray-700);
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <span>📚</span>
+                <span>PRD Navigator</span>
+            </div>
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Tìm kiếm (Ctrl+K)..."
+                    autocomplete="off"
+                >
+            </div>
+            <div class="breadcrumb" id="breadcrumb"></div>
+            <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <h3>📚 Documents</h3>
+            <div id="documentLinks"></div>
+
+            <h3>👥 Roles</h3>
+            <a href="#" onclick="filterByRole('pm')">📊 Product Manager</a>
+            <a href="#" onclick="filterByRole('engineer')">💻 Engineer</a>
+            <a href="#" onclick="filterByRole('designer')">🎨 Designer</a>
+            <a href="#" onclick="filterByRole('ai')">🤖 AI/ML</a>
+            <a href="#" onclick="filterByRole('devops')">🔧 DevOps</a>
+
+            <h3>🎯 Quick Links</h3>
+            <a href="#" onclick="viewDocument('00_START_HERE.md')">🚀 Start Here</a>
+            <a href="#" onclick="viewDocument('01_PRODUCT_OVERVIEW.md')">🎯 Overview</a>
+            <a href="#" onclick="viewDocument('06_BOOKING_ORCHESTRATION_ENGINE.md')">⭐ Core Moat</a>
+            <a href="#" onclick="viewDocument('05_AI_LOGIC_ARCHITECTURE.md')">🤖 AI Logic</a>
+            <a href="#" onclick="viewDocument('08_TECH_STACK_AI.md')">💻 Tech Stack</a>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Document List -->
+            <div class="document-list" id="documentList"></div>
+
+            <!-- Viewer -->
+            <div class="viewer" id="viewer">
+                <div class="viewer-header">
+                    <div>
+                        <div class="viewer-title" id="viewerTitle"></div>
+                        <div style="font-size: 12px; color: var(--gray-700); margin-top: 5px;" id="viewerInfo"></div>
+                    </div>
+                    <button class="viewer-close" onclick="closeViewer()">✕</button>
+                </div>
+                <div class="viewer-content" id="viewerContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Document Database
+        const documents = [
+            {
+                file: "00_START_HERE.md",
+                title: "START HERE",
+                icon: "🚀",
+                desc: "Điểm khởi đầu, hướng dẫn theo vai trò",
+                roles: ["all"],
+                time: "10 min"
+            },
+            {
+                file: "01_PRODUCT_OVERVIEW.md",
+                title: "Product Overview",
+                icon: "🎯",
+                desc: "Tổng quan sản phẩm, mục tiêu, ICP",
+                roles: ["pm", "designer"],
+                time: "15 min"
+            },
+            {
+                file: "02_MARKET_PROBLEMS.md",
+                title: "Market Problems",
+                icon: "💔",
+                desc: "Vấn đề thị trường, pain points, validation",
+                roles: ["pm"],
+                time: "12 min"
+            },
+            {
+                file: "03_PRODUCT_SCOPE.md",
+                title: "Product Scope",
+                icon: "📦",
+                desc: "Phạm vi MVP, features, timeline",
+                roles: ["all"],
+                time: "15 min"
+            },
+            {
+                file: "04_FEATURE_DETAILS.md",
+                title: "Feature Details",
+                icon: "⚙️",
+                desc: "Chi tiết modules, data models, UI specs",
+                roles: ["engineer", "designer", "ai"],
+                time: "20 min"
+            },
+            {
+                file: "05_AI_LOGIC_ARCHITECTURE.md",
+                title: "AI Logic Architecture",
+                icon: "🤖",
+                desc: "AI strategy, LLM, prompt engineering",
+                roles: ["ai", "engineer"],
+                time: "25 min"
+            },
+            {
+                file: "06_BOOKING_ORCHESTRATION_ENGINE.md",
+                title: "Booking Engine (CORE)",
+                icon: "📅",
+                desc: "State machine, validation, slot management",
+                roles: ["all"],
+                time: "25 min"
+            },
+            {
+                file: "07_UX_UI_FLOWS.md",
+                title: "UX/UI Flows",
+                icon: "🎨",
+                desc: "User flows, wireframes, design system",
+                roles: ["designer", "pm"],
+                time: "20 min"
+            },
+            {
+                file: "08_TECH_STACK_AI.md",
+                title: "Tech Stack",
+                icon: "💻",
+                desc: "Architecture, FastAPI, DevOps, infrastructure",
+                roles: ["engineer", "devops", "ai"],
+                time: "30 min"
+            }
+        ];
+
+        let allDocuments = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderDocumentList();
+            setupSearch();
+            setupSidebar();
+            setupKeyboardShortcuts();
+            renderSidebar();
+        });
+
+        // Render Document List
+        function renderDocumentList() {
+            const container = document.getElementById('documentList');
+            const html = documents.map(doc => `
+                <div class="doc-card" onclick="viewDocument('${doc.file}')">
+                    <div class="doc-icon">${doc.icon}</div>
+                    <div class="doc-title">${doc.title}</div>
+                    <div class="doc-desc">${doc.desc}</div>
+                    <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--gray-700); margin-top: 10px;">
+                        <span>⏱️ ${doc.time}</span>
+                        <span>${doc.roles.includes('all') ? '👥 All' : doc.roles.map(r => roleName(r)).join(', ')}</span>
+                    </div>
+                </div>
+            `).join('');
+            
+            container.innerHTML = `
+                <div style="margin-bottom: 10px; color: var(--gray-700); font-size: 14px;">
+                    <strong>${documents.length} Documents</strong> | 5,500+ lines | 230KB
+                </div>
+                <div class="document-grid">${html}</div>
+            `;
+        }
+
+        // Render Sidebar Links
+        function renderSidebar() {
+            const container = document.getElementById('documentLinks');
+            const html = documents.map(doc => `
+                <a href="#" onclick="viewDocument('${doc.file}'); closeSidebar(); return false;">
+                    ${doc.icon} ${doc.title}
+                </a>
+            `).join('');
+            container.innerHTML = html;
+        }
+
+        // View Document
+        async function viewDocument(filename) {
+            const doc = documents.find(d => d.file === filename);
+            if (!doc) return;
+
+            const viewer = document.getElementById('viewer');
+            const content = document.getElementById('viewerContent');
+            
+            // Show loading
+            document.getElementById('documentList').style.display = 'none';
+            content.innerHTML = '<div class="loading"><div class="spinner"></div><p>Đang tải...</p></div>';
+            viewer.classList.add('active');
+
+            try {
+                // Load markdown file
+                const response = await fetch(filename);
+                if (!response.ok) throw new Error('File not found');
+                
+                const markdown = await response.text();
+                
+                // Parse markdown to HTML
+                const html = marked.parse(markdown);
+                
+                // Display
+                document.getElementById('viewerTitle').textContent = doc.title;
+                document.getElementById('viewerInfo').textContent = `${doc.icon} ${doc.desc} • ⏱️ ${doc.time}`;
+                content.innerHTML = html;
+                
+                // Update breadcrumb
+                document.getElementById('breadcrumb').textContent = `📖 ${doc.title}`;
+                
+                // Highlight code blocks
+                document.querySelectorAll('pre code').forEach(block => {
+                    block.className = 'language-' + (block.className || 'text');
+                });
+                
+            } catch (error) {
+                content.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">⚠️</div>
+                        <h3>Không thể tải tài liệu</h3>
+                        <p style="margin-top: 10px; color: var(--gray-700);">
+                            Tệp <strong>${filename}</strong> không tìm thấy.<br><br>
+                            💡 Gợi ý: Hãy kiểm tra:
+                            <ul style="text-align: left; display: inline-block; margin-top: 15px;">
+                                <li>Tệp có tồn tại trong cùng thư mục không?</li>
+                                <li>Tên tệp đúng không (chính xác hoa/thường)?</li>
+                                <li>Bạn có cần server để serve files không?</li>
+                            </ul>
+                        </p>
+                        <p style="margin-top: 20px; font-size: 12px; color: #999;">
+                            💻 Để fix: Chạy một simple HTTP server:<br>
+                            <code>python -m http.server 8000</code> (Python 3)
+                        </p>
+                    </div>
+                `;
+            }
+            
+            closeSidebar();
+        }
+
+        // Close Viewer
+        function closeViewer() {
+            document.getElementById('viewer').classList.remove('active');
+            document.getElementById('breadcrumb').textContent = '';
+            document.getElementById('documentList').style.display = 'block';
+        }
+
+        // Setup Search
+        function setupSearch() {
+            const input = document.getElementById('searchInput');
+            
+            input.addEventListener('input', function(e) {
+                const query = e.target.value.toLowerCase();
+                
+                if (!query) {
+                    renderDocumentList();
+                    return;
+                }
+
+                const filtered = documents.filter(doc => 
+                    doc.title.toLowerCase().includes(query) ||
+                    doc.desc.toLowerCase().includes(query) ||
+                    doc.file.toLowerCase().includes(query)
+                );
+
+                const html = filtered.map(doc => `
+                    <div class="doc-card" onclick="viewDocument('${doc.file}')">
+                        <div class="doc-icon">${doc.icon}</div>
+                        <div class="doc-title">${doc.title}</div>
+                        <div class="doc-desc">${doc.desc}</div>
+                    </div>
+                `).join('');
+
+                document.getElementById('documentList').innerHTML = html || 
+                    '<div class="empty-state"><div class="empty-icon">🔍</div><p>Không tìm thấy tài liệu</p></div>';
+            });
+        }
+
+        // Setup Sidebar
+        function setupSidebar() {
+            document.getElementById('sidebarToggle').addEventListener('click', function() {
+                document.getElementById('sidebar').classList.toggle('open');
+            });
+        }
+
+        // Close Sidebar
+        function closeSidebar() {
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+        }
+
+        // Filter by Role
+        function filterByRole(role) {
+            const input = document.getElementById('searchInput');
+            input.value = '';
+            
+            const filtered = role === 'all' ? documents : documents.filter(doc => 
+                doc.roles.includes(role) || doc.roles.includes('all')
+            );
+
+            const html = filtered.map(doc => `
+                <div class="doc-card" onclick="viewDocument('${doc.file}')">
+                    <div class="doc-icon">${doc.icon}</div>
+                    <div class="doc-title">${doc.title}</div>
+                    <div class="doc-desc">${doc.desc}</div>
+                </div>
+            `).join('');
+
+            document.getElementById('documentList').innerHTML = html;
+            closeSidebar();
+        }
+
+        // Keyboard Shortcuts
+        function setupKeyboardShortcuts() {
+            document.addEventListener('keydown', function(e) {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    document.getElementById('searchInput').focus();
+                }
+                if (e.key === 'Escape') {
+                    closeViewer();
+                }
+            });
+        }
+
+        // Helper
+        function roleName(role) {
+            const names = {
+                'pm': 'PM',
+                'engineer': 'Engineer',
+                'designer': 'Designer',
+                'ai': 'AI/ML',
+                'devops': 'DevOps',
+                'all': 'All'
+            };
+            return names[role] || role;
+        }
+    </script>
+</body>
+</html>

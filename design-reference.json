@@ -1,0 +1,305 @@
+{
+  "colors": [
+    {
+      "hex": "#0f1835",
+      "rgb": "rgb(15, 24, 53)",
+      "count": 1311,
+      "usage": [
+        "text",
+        "background",
+        "border"
+      ]
+    },
+    {
+      "hex": "#afb2bd",
+      "rgb": "rgb(175, 178, 189)",
+      "count": 60,
+      "usage": [
+        "text"
+      ]
+    },
+    {
+      "hex": "#5d6272",
+      "rgb": "rgb(93, 98, 114)",
+      "count": 56,
+      "usage": [
+        "text"
+      ]
+    },
+    {
+      "hex": "#f8f9fa",
+      "rgb": "rgb(248, 249, 250)",
+      "count": 54,
+      "usage": [
+        "background"
+      ]
+    },
+    {
+      "hex": "#333333",
+      "rgb": "rgb(51, 51, 51)",
+      "count": 25,
+      "usage": [
+        "text"
+      ]
+    },
+    {
+      "hex": "#f4f6fa",
+      "rgb": "rgb(244, 246, 250)",
+      "count": 18,
+      "usage": [
+        "background"
+      ]
+    },
+    {
+      "hex": "#555555",
+      "rgb": "rgb(85, 85, 85)",
+      "count": 18,
+      "usage": [
+        "text"
+      ]
+    },
+    {
+      "hex": "#e8ecf2",
+      "rgb": "rgb(232, 236, 242)",
+      "count": 14,
+      "usage": [
+        "border"
+      ]
+    },
+    {
+      "hex": "#cccccc",
+      "rgb": "rgb(204, 204, 204)",
+      "count": 12,
+      "usage": [
+        "border"
+      ]
+    },
+    {
+      "hex": "#999999",
+      "rgb": "rgb(153, 153, 153)",
+      "count": 9,
+      "usage": [
+        "text",
+        "border"
+      ]
+    },
+    {
+      "hex": "#fa6e5b",
+      "rgb": "rgb(250, 110, 91)",
+      "count": 8,
+      "usage": [
+        "text",
+        "border"
+      ]
+    },
+    {
+      "hex": "#e25a4a",
+      "rgb": "rgb(226, 90, 74)",
+      "count": 8,
+      "usage": [
+        "background",
+        "text",
+        "border"
+      ]
+    }
+  ],
+  "fonts": [
+    {
+      "name": "Roboto",
+      "count": 381,
+      "elements": [
+        "html",
+        "head",
+        "title",
+        "style",
+        "script",
+        "noscript",
+        "body",
+        "app-root",
+        "app-biz",
+        "app-biz-detail",
+        "app-layout",
+        "div",
+        "app-biz-header",
+        "ng-select",
+        "span",
+        "app-biz-menu",
+        "a",
+        "li",
+        "app-biz-chat-live",
+        "app-biz-chat-channels",
+        "button",
+        "ng-scrollbar",
+        "app-select-platform-custom",
+        "app-avatar",
+        "strong",
+        "aside",
+        "svg",
+        "defs",
+        "pattern"
+      ],
+      "sample": "Livechat Page\n    \n    \n    \n ...",
+      "usage": "Used in 381 elements"
+    },
+    {
+      "name": "Arial",
+      "count": 11,
+      "elements": [
+        "label",
+        "button"
+      ],
+      "sample": "HEX",
+      "usage": "Used in 11 elements"
+    }
+  ],
+  "typography": [
+    {
+      "type": "text",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "lineHeight": "21px",
+      "fontFamily": "Roboto",
+      "color": "rgb(15, 24, 53)",
+      "sample": "VIK Group LiveChat Bots-Auto Customers Statistics ...",
+      "tag": "div"
+    },
+    {
+      "type": "text",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "lineHeight": "24px",
+      "fontFamily": "Roboto",
+      "color": "rgb(255, 255, 255)",
+      "sample": "VIK Group",
+      "tag": "div"
+    }
+  ],
+  "spacing": [
+    {
+      "type": "padding",
+      "value": "0px 10.5px",
+      "pixels": 0,
+      "count": 23
+    },
+    {
+      "type": "margin",
+      "value": "0px 0px 14px",
+      "pixels": 0,
+      "count": 23
+    },
+    {
+      "type": "padding",
+      "value": "16px",
+      "pixels": 16,
+      "count": 23
+    },
+    {
+      "type": "margin",
+      "value": "0px 0px 2px",
+      "pixels": 0,
+      "count": 11
+    },
+    {
+      "type": "padding",
+      "value": "3.5px",
+      "pixels": 5,
+      "count": 8
+    },
+    {
+      "type": "padding",
+      "value": "7px",
+      "pixels": 7,
+      "count": 7
+    },
+    {
+      "type": "padding",
+      "value": "4px",
+      "pixels": 4,
+      "count": 6
+    },
+    {
+      "type": "padding",
+      "value": "0px 3.5px",
+      "pixels": 0,
+      "count": 5
+    },
+    {
+      "type": "padding",
+      "value": "0px 24px",
+      "pixels": 0,
+      "count": 4
+    },
+    {
+      "type": "padding",
+      "value": "0px 1px 0px 0px",
+      "pixels": 0,
+      "count": 4
+    }
+  ],
+  "effects": [
+    {
+      "type": "transform",
+      "value": "matrix(1, 0, 0, 1, 0, 0)",
+      "rawValue": "matrix(1, 0, 0, 1, 0, 0)",
+      "count": 6,
+      "elements": {},
+      "category": "transform"
+    },
+    {
+      "type": "filter",
+      "value": "grayscale(0.3)",
+      "rawValue": "grayscale(0.3)",
+      "count": 5,
+      "elements": {},
+      "category": "filter"
+    },
+    {
+      "type": "opacity",
+      "value": "0.75",
+      "rawValue": "0.75",
+      "count": 5,
+      "elements": {},
+      "category": "transparency"
+    },
+    {
+      "type": "opacity",
+      "value": "0",
+      "rawValue": "0",
+      "count": 5,
+      "elements": {},
+      "category": "transparency"
+    },
+    {
+      "type": "transform",
+      "value": "matrix(1, 0, 0, 1, 0, -10.5)",
+      "rawValue": "matrix(1, 0, 0, 1, 0, -10.5)",
+      "count": 4,
+      "elements": {},
+      "category": "transform"
+    },
+    {
+      "type": "gradient",
+      "value": "-webkit-linear-gradient(156deg, color percent, color percent)",
+      "rawValue": "-webkit-linear-gradient(156deg, rgb(255, 114, 101) 0%, rgb(122, 195, 255) 100%)",
+      "count": 1,
+      "elements": {},
+      "category": "linear-gradient"
+    },
+    {
+      "type": "transform",
+      "value": "matrix(1, 0, 0, 1, 1224.5, 64.5)",
+      "rawValue": "matrix(1, 0, 0, 1, 1224.5, 64.5)",
+      "count": 1,
+      "elements": {},
+      "category": "transform"
+    },
+    {
+      "type": "transform",
+      "value": "matrix(1, 0, 0, 1, 59, 0)",
+      "rawValue": "matrix(1, 0, 0, 1, 59, 0)",
+      "count": 1,
+      "elements": {},
+      "category": "transform"
+    }
+  ]
+}

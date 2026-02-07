@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Live Widget</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+        }
+        h1 { color: #1a202c; margin-bottom: 1rem; }
+        p { color: #4a5568; line-height: 1.5; }
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #e2e8f0;
+            color: #4a5568;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My Awesome Website</h1>
+        <p>This is a demo page to test the SmaxAI Chat Widget.</p>
+        <p>The widget should appear in the bottom-right corner.</p>
+        <div class="badge">Simulating external website</div>
+    </div>
+
+    <script>
+        // Get merchant ID from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const merchantId = urlParams.get('merchant_id');
+
+        if (merchantId) {
+            const script = document.createElement('script');
+            script.src = "/dist-widget/widget.js";
+            script.setAttribute('data-id', merchantId);
+            document.body.appendChild(script);
+        } else {
+            document.body.insertAdjacentHTML('beforeend', '<p style="color: red; text-align: center; margin-top: 1rem;">Error: No merchant_id provided in URL</p>');
+        }
+    </script>
+</body>
+</html>

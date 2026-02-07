@@ -1,0 +1,22 @@
+
+FROM denoland/deno:1.37.0
+
+# The port that your application listens to.
+EXPOSE 8000
+
+WORKDIR /app
+
+# Cache the dependencies as a layer (this speeds up builds)
+COPY supabase/functions/chat/index.ts .
+RUN deno cache index.ts
+
+# Prefer not to run as root.
+USER deno
+
+# These are passed at runtime by Coolify, but good to declare
+ENV SUPABASE_URL=""
+ENV SUPABASE_SERVICE_ROLE_KEY=""
+ENV OPENAI_API_KEY=""
+
+# Run the server
+CMD ["run", "--allow-net", "--allow-env", "index.ts"]

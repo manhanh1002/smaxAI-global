@@ -1,0 +1,20 @@
+{
+  "name": "smax-ai-global-demo-root",
+  "private": true,
+  "scripts": {
+    "install:all": "cd smax-frontend && npm install",
+    "dev": "cd smax-frontend && npm run dev",
+    "build": "cd smax-frontend && npm install && npm run build && cd .. && rm -rf dist && cp -r smax-frontend/dist dist",
+    "lint": "cd smax-frontend && npm run lint",
+    "preview": "cd smax-frontend && npm run preview"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.91.1",
+    "@types/papaparse": "^5.5.2",
+    "papaparse": "^5.5.3",
+    "recharts": "^3.7.0"
+  },
+  "devDependencies": {
+    "dotenv": "^17.2.4"
+  }
+}
